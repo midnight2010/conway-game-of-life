@@ -2,13 +2,15 @@ let container = document.querySelector('.container');
 let button = document.querySelector('button')
 
 let arr = [];
+let n = 12;
 
+document.querySelector('.container').style.width = (22 * n ) + 'px';
 
-for(let i = 1; i <=144; i++) {
+for(let i = 1; i <=n*n; i++) {
     arr.push('');
     let div = document.createElement('div');
     div.classList.add('cell');
-    container.append(div)
+    container.append(div);
 }
 
 let cells = document.querySelectorAll('.cell');
@@ -17,7 +19,7 @@ cells.forEach((cell,index)=> {
     cell.addEventListener('click',()=> {
         cell.classList.add('clicked')
         arr[index] = 'clicked';
-        console.log(arr)
+        
     })
    
 })
@@ -25,8 +27,8 @@ cells.forEach((cell,index)=> {
 
 button.addEventListener('click',()=> {
     for(let i = 0; i < cells.length; i++) {
-    let row = parseInt(i / 12);
-    let col = i % 12;
+    let row = parseInt(i / n);
+    let col = i % n;
         if(cells[i].classList.contains('clicked')) {
             let result = neighbours(i,col,row);
             if(result < 2) {
@@ -48,41 +50,41 @@ button.addEventListener('click',()=> {
 function neighbours(i,col,row) {
     let k = 0;
     if(row === 0) {
-        k+= check(cells[i + cells.length - 12]);
+        k+= check(cells[i + cells.length - n]);
         if(col === 0) {
-            k+= check(cells[i+1],cells[i+12],cells[i+13],cells[i+11]);
+            k+= check(cells[i+1],cells[i+n],cells[i+(n+1)],cells[i+(n-1)]);
             
         }
-        else if(col === 11) {
-            k+= check(cells[i-1],cells[i+12],cells[i+11],cells[i-11])
+        else if(col === (n-1)) {
+            k+= check(cells[i-1],cells[i+n],cells[i+(n-1)],cells[i-(n-1)])
         }
         else {
-            k+= check(cells[i-1],cells[i+1],cells[i+11],cells[i+12],cells[i+13])
+            k+= check(cells[i-1],cells[i+1],cells[i+(n-1)],cells[i+n],cells[i+(n+1)])
         }
 
     }
-    else if(row === 11) {
-        k += check(cells[i % 12]);
+    else if(row === (n-1)) {
+        k += check(cells[i % n]);
         if(col === 0) {
-            k+= check(cells[i-12],cells[i-11],cells[i+1],cells[i+11]);
+            k+= check(cells[i-n],cells[i-(n-1)],cells[i+1],cells[i+(n-1)]);
         }
-        if(col === 11) {
-         k+= check(cells[i-12],cells[i-13],cells[i-1],cells[i-11])
+        if(col === (n-1)) {
+         k+= check(cells[i-n],cells[i-(n+1)],cells[i-1],cells[i-(n-1)])
         }
         else {
-            k+= check(cells[i-1],cells[i+1],cells[i-11],cells[i-12],cells[i-13])
+            k+= check(cells[i-1],cells[i+1],cells[i-(n-1)],cells[i-n],cells[i-(n+1)])
         }
     }
     
     else {
         if(col === 0) {
-            k+= check(cells[i+12],cells[i+13],cells[i+1],cells[i-12],cells[i-11],cells[i+11]);
+            k+= check(cells[i+n],cells[i+(n+1)],cells[i+1],cells[i-n],cells[i-(n-1)],cells[i+(n-1)]);
         }
-        else if(col === 11) {
-            k+= check(cells[i+12],cells[i+11],cells[i-1],cells[i-12],cells[i-13],cells[i-11]);
+        else if(col === (n-1)) {
+            k+= check(cells[i+n],cells[i+(n-1)],cells[i-1],cells[i-n],cells[i-(n+1)],cells[i-(n-1)]);
         }
         else {
-            k+= check(cells[i+1],cells[i-1],cells[i-11],cells[i-12],cells[i-13],cells[i+11],cells[i+12],cells[i+13])
+            k+= check(cells[i+1],cells[i-1],cells[i-(n-1)],cells[i-n],cells[i-(n+1)],cells[i+(n-1)],cells[i+n],cells[i+(n+1)])
         }
     
     }    
