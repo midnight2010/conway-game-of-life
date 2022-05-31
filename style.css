@@ -1,0 +1,15 @@
+.container {
+    width:400px;
+}
+
+.cell {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.clicked {
+    background-color: green;
+}
